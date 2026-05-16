@@ -1,14 +1,22 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 
 import DashboardScreen from '../screens/DashboardScreen';
 import PacientesScreen from '../screens/PacientesScreen';
 import FamiliasScreen from '../screens/FamiliasScreen';
 import ClinicasScreen from '../screens/ClinicasScreen';
+import CitasScreen from '../screens/CitasScreen';
+import PatientDetailScreen from '../screens/PatientDetailScreen';
+import CreatePatientScreen from '../screens/CreatePatientScreen';
+import EditPatientScreen from '../screens/EditPatientScreen';
+import AgendarCitaScreen from '../screens/AgendarCitaScreen';
 
 const Tab = createBottomTabNavigator();
+const PacientesStack = createStackNavigator();
+const CitasStack = createStackNavigator();
 
 const PRIMARY = '#2196F3';
 const INACTIVE = '#9E9E9E';
@@ -21,6 +29,26 @@ function TabIcon({ name, focused, size }) {
       size={size}
       color={focused ? PRIMARY : INACTIVE}
     />
+  );
+}
+
+function PacientesStackNavigator() {
+  return (
+    <PacientesStack.Navigator screenOptions={{ headerShown: false }}>
+      <PacientesStack.Screen name="PacientesList" component={PacientesScreen} />
+      <PacientesStack.Screen name="PatientDetail" component={PatientDetailScreen} />
+      <PacientesStack.Screen name="CreatePatient" component={CreatePatientScreen} />
+      <PacientesStack.Screen name="EditPatient" component={EditPatientScreen} />
+    </PacientesStack.Navigator>
+  );
+}
+
+function CitasStackNavigator() {
+  return (
+    <CitasStack.Navigator screenOptions={{ headerShown: false }}>
+      <CitasStack.Screen name="CitasList" component={CitasScreen} />
+      <CitasStack.Screen name="AgendarCita" component={AgendarCitaScreen} />
+    </CitasStack.Navigator>
   );
 }
 
@@ -49,8 +77,18 @@ export default function AppNavigator() {
         }}
       />
       <Tab.Screen
+        name="Citas"
+        component={CitasStackNavigator}
+        options={{
+          tabBarLabel: 'Citas',
+          tabBarIcon: ({ focused, size }) => (
+            <TabIcon name="calendar" focused={focused} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
         name="Pacientes"
-        component={PacientesScreen}
+        component={PacientesStackNavigator}
         options={{
           tabBarLabel: 'Pacientes',
           tabBarIcon: ({ focused, size }) => (
