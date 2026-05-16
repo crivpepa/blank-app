@@ -1,0 +1,34 @@
+name: Claude Write Permission
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Acción a realizar'
+        required: true
+        default: 'create-branch'
+        type: choice
+        options:
+          - create-branch
+          - create-file
+          - update-file
+          - create-pr
+
+jobs:
+  claude-access:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Display workflow triggered
+        run: |
+          echo "✅ Workflow ejecutado con permisos de escritura"
+          echo "📝 Acción: ${{ github.event.inputs.action }}"
+          echo "🔑 Token disponible: ${{ secrets.GITHUB_TOKEN != '' }}"
