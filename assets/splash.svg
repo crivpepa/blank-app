@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1284 2778" width="1284" height="2778">
+  <!-- Full blue background -->
+  <rect x="0" y="0" width="1284" height="2778" fill="#2196F3"/>
+
+  <!-- White medical cross (plus sign) centered vertically above midpoint -->
+  <!-- Horizontal bar -->
+  <rect x="442" y="1120" width="400" height="160" rx="20" ry="20" fill="#FFFFFF"/>
+  <!-- Vertical bar -->
+  <rect x="562" y="1000" width="160" height="400" rx="20" ry="20" fill="#FFFFFF"/>
+
+  <!-- White pulse / heartbeat line below the cross -->
+  <polyline
+    points="292,1620 402,1620 442,1550 482,1690 522,1550 562,1620 672,1620 712,1560 752,1680 792,1620 992,1620"
+    fill="none"
+    stroke="#FFFFFF"
+    stroke-width="28"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    opacity="0.85"
+  />
+
+  <!-- "Recovery App" text -->
+  <text
+    x="642"
+    y="1820"
+    font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
+    font-size="96"
+    font-weight="700"
+    fill="#FFFFFF"
+    text-anchor="middle"
+    letter-spacing="2"
+  >Recovery App</text>
+
+  <!-- Subtitle -->
+  <text
+    x="642"
+    y="1930"
+    font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
+    font-size="52"
+    font-weight="400"
+    fill="#FFFFFF"
+    text-anchor="middle"
+    opacity="0.85"
+    letter-spacing="1"
+  >Clínica de Rehabilitación</text>
+</svg>

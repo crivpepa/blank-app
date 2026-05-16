@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Blue rounded rectangle background -->
+  <rect x="0" y="0" width="1024" height="1024" rx="180" ry="180" fill="#2196F3"/>
+
+  <!-- White medical cross (plus sign) centered -->
+  <!-- Horizontal bar -->
+  <rect x="312" y="432" width="400" height="160" rx="20" ry="20" fill="#FFFFFF"/>
+  <!-- Vertical bar -->
+  <rect x="432" y="312" width="160" height="400" rx="20" ry="20" fill="#FFFFFF"/>
+
+  <!-- White pulse / heartbeat line below the cross -->
+  <polyline
+    points="200,810 310,810 350,740 390,880 430,740 470,810 580,810 620,750 660,870 700,810 824,810"
+    fill="none"
+    stroke="#FFFFFF"
+    stroke-width="28"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    opacity="0.85"
+  />
+</svg>

@@ -1,0 +1,40 @@
+NOMBRE
+Recovery App - Clínica de Rehabilitación
+
+SUBTÍTULO
+Gestión integral de pacientes y citas
+
+DESCRIPCIÓN
+Recovery App es la plataforma digital diseñada específicamente para clínicas y centros de rehabilitación física. Simplifica cada aspecto de la administración clínica para que el equipo médico pueda enfocarse en lo que realmente importa: la recuperación de sus pacientes.
+
+GESTIÓN COMPLETA DE PACIENTES
+Lleva un expediente digital detallado de cada paciente: datos personales, historial clínico, diagnósticos, tratamientos activos y evolución en el tiempo. Busca y filtra pacientes de forma instantánea, y accede a su información desde cualquier dispositivo autorizado.
+
+SEGUIMIENTO FAMILIAR
+Registra y gestiona a los familiares o tutores responsables de cada paciente. Mantén a los familiares informados del progreso terapéutico y facilita la comunicación entre el equipo clínico y las familias para una atención más humana e integral.
+
+AGENDA Y CITAS INTELIGENTE
+Programa, modifica y cancela citas de manera sencilla. Visualiza la disponibilidad del personal médico y de los consultorios en tiempo real. Reduce las ausencias con una gestión de agenda clara y centralizada para todo el equipo.
+
+SOPORTE MULTI-CLÍNICA
+¿Tienes varias sucursales? Recovery App está preparada para administrar múltiples clínicas desde una sola cuenta. Gestiona diferentes sedes con sus propios equipos, pacientes y agendas, manteniendo la visibilidad global del negocio.
+
+PARA TODO EL EQUIPO CLÍNICO
+Recovery App está diseñada para administradores de clínica, médicos especialistas, fisioterapeutas y personal de recepción. Roles y permisos diferenciados garantizan que cada miembro del equipo acceda solo a la información que necesita.
+
+SEGURIDAD Y PRIVACIDAD
+La información de los pacientes es confidencial. Recovery App almacena todos los datos de forma segura en la nube mediante Firebase/Firestore con cifrado en tránsito y en reposo. Cumplimos con los más altos estándares de protección de datos de salud para darte la tranquilidad que mereces.
+
+Lleva tu clínica al siguiente nivel digital. Descarga Recovery App hoy y transforma la manera en que gestionas tu centro de rehabilitación.
+
+PALABRAS CLAVE (100 chars max)
+rehabilitación,fisioterapia,pacientes,clínica,citas,salud,médico,terapia,gestión,agenda
+
+CATEGORÍA PRINCIPAL
+Medical (Médica)
+
+CATEGORÍA SECUNDARIA
+Business (Negocios)
+
+NOVEDADES - VERSIÓN 1.0
+¡Bienvenido a Recovery App! Primera versión con gestión completa de pacientes, familias, citas y clínicas de rehabilitación.

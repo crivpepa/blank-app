@@ -7,6 +7,9 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "description": "Recovery App es la solución completa para la gestión de clínicas de rehabilitación. Administra pacientes, familias, citas y clínicas desde una sola app.",
+    "primaryColor": "#2196F3",
+    "platforms": ["ios", "android"],
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -17,14 +20,20 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.recoveryclinic.app"
+      "bundleIdentifier": "com.recoveryclinic.app",
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Recovery App necesita acceso a la cámara para tomar fotos de los pacientes y documentos clínicos.",
+        "NSPhotoLibraryUsageDescription": "Recovery App necesita acceso a la galería de fotos para adjuntar imágenes a los expedientes de pacientes."
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#2196F3"
       },
-      "package": "com.recoveryclinic.app"
+      "package": "com.recoveryclinic.app",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png",
