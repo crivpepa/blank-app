@@ -36,7 +36,6 @@ async function createVoiceClone(voiceName, description = '', samplesDir = SAMPLE
 
   form.append('name', voiceName);
   if (description) form.append('description', description);
-  form.append('labels', JSON.stringify({ use_case: 'voiceforge', accent: 'neutral' }));
 
   for (const filePath of files) {
     form.append('files', fs.createReadStream(filePath), path.basename(filePath));
@@ -44,7 +43,7 @@ async function createVoiceClone(voiceName, description = '', samplesDir = SAMPLE
   }
 
   console.log('[Clone] Uploading samples to ElevenLabs — this may take a moment...');
-  const res = await client.post('/voices/add', form, {
+  const res = await client.post('/voices/ivc', form, {
     headers: form.getHeaders(),
     maxContentLength: Infinity,
     maxBodyLength: Infinity,
