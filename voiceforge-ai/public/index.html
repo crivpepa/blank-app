@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VoiceForge AI</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f0f13;
+      --card: #1a1a23;
+      --border: #2e2e3e;
+      --accent: #7c6aff;
+      --accent2: #3ecfcf;
+      --text: #e2e2f0;
+      --muted: #6b6b88;
+      --success: #3ecf8e;
+      --error: #ff5b5b;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    header h1 {
+      font-size: 1.8rem;
+      letter-spacing: 0.05em;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    header p { color: var(--muted); font-size: 0.85rem; margin-top: 0.4rem; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .card h2 {
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    label { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 0.3rem; margin-top: 0.8rem; }
+    label:first-of-type { margin-top: 0; }
+
+    input, select, textarea {
+      width: 100%;
+      background: #111118;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.85rem;
+      padding: 0.55rem 0.8rem;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+    textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
+    select option { background: #1a1a23; }
+
+    .row { display: flex; gap: 0.8rem; }
+    .row > * { flex: 1; }
+
+    button {
+      margin-top: 1rem;
+      width: 100%;
+      padding: 0.7rem;
+      border: none;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: background 0.15s, opacity 0.15s;
+    }
+    button:hover { background: #9a8cff; }
+    button:disabled { opacity: 0.45; cursor: not-allowed; }
+    button.secondary { background: #2e2e3e; }
+    button.secondary:hover { background: #3a3a50; }
+
+    .status {
+      margin-top: 0.9rem;
+      padding: 0.6rem 0.9rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      display: none;
+      word-break: break-all;
+    }
+    .status.ok  { background: #0d2b1e; border: 1px solid var(--success); color: var(--success); display: block; }
+    .status.err { background: #2b0d0d; border: 1px solid var(--error);   color: var(--error);   display: block; }
+
+    .exports-list { list-style: none; margin-top: 0.5rem; }
+    .exports-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8rem;
+    }
+    .exports-list li:last-child { border-bottom: none; }
+    .exports-list a { color: var(--accent2); text-decoration: none; }
+    .exports-list a:hover { text-decoration: underline; }
+    .empty { color: var(--muted); font-size: 0.8rem; font-style: italic; }
+
+    .range-row { display: flex; align-items: center; gap: 0.6rem; }
+    .range-row input[type=range] { flex: 1; background: transparent; }
+    .range-row span { width: 2.5rem; text-align: right; font-size: 0.8rem; color: var(--accent2); }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>⚡ VoiceForge AI</h1>
+  <p>Voice Cloning &amp; Ableton-Ready TTS Export</p>
+</header>
+
+<div class="grid">
+
+  <!-- ── Clone Voice ── -->
+  <div class="card">
+    <h2>🧬 Clone Voice</h2>
+    <p style="font-size:0.78rem;color:var(--muted);margin-bottom:1rem;">
+      Place WAV/MP3 files in <code>./samples/</code> before submitting.
+    </p>
+    <label>Voice Name</label>
+    <input id="clone-name" type="text" placeholder="e.g. MyVoice" />
+    <label>Description (optional)</label>
+    <input id="clone-desc" type="text" placeholder="e.g. Deep narrator voice" />
+    <button id="btn-clone">Upload Samples &amp; Clone</button>
+    <div id="clone-status" class="status"></div>
+  </div>
+
+  <!-- ── Generate TTS ── -->
+  <div class="card" style="grid-column: span 1;">
+    <h2>🔊 Generate Speech</h2>
+    <label>Select Voice</label>
+    <select id="tts-voice">
+      <option value="">Loading voices…</option>
+    </select>
+    <label>Text to Synthesize</label>
+    <textarea id="tts-text" placeholder="Paste your script here…"></textarea>
+    <label>Stability</label>
+    <div class="range-row">
+      <input type="range" id="stability" min="0" max="1" step="0.05" value="0.5" />
+      <span id="stability-val">0.50</span>
+    </div>
+    <label>Similarity Boost</label>
+    <div class="range-row">
+      <input type="range" id="similarity" min="0" max="1" step="0.05" value="0.75" />
+      <span id="similarity-val">0.75</span>
+    </div>
+    <button id="btn-tts">Generate 44.1 kHz WAV</button>
+    <div id="tts-status" class="status"></div>
+  </div>
+
+  <!-- ── Exports ── -->
+  <div class="card">
+    <h2>📂 Exports</h2>
+    <button class="secondary" id="btn-refresh" style="margin-top:0;margin-bottom:0.8rem;">↻ Refresh</button>
+    <ul id="exports-list" class="exports-list">
+      <li class="empty">Loading…</li>
+    </ul>
+  </div>
+
+</div>
+
+<script>
+  // ── Utility ────────────────────────────────────────────────
+  function setStatus(el, msg, ok) {
+    el.textContent = msg;
+    el.className = 'status ' + (ok ? 'ok' : 'err');
+  }
+
+  async function post(url, body) {
+    const r = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    return r.json();
+  }
+
+  // ── Range sliders ──────────────────────────────────────────
+  document.getElementById('stability').addEventListener('input', function() {
+    document.getElementById('stability-val').textContent = parseFloat(this.value).toFixed(2);
+  });
+  document.getElementById('similarity').addEventListener('input', function() {
+    document.getElementById('similarity-val').textContent = parseFloat(this.value).toFixed(2);
+  });
+
+  // ── Load voices ────────────────────────────────────────────
+  async function loadVoices() {
+    const sel = document.getElementById('tts-voice');
+    try {
+      const data = await fetch('/api/voices').then(r => r.json());
+      sel.innerHTML = '';
+      if (!data.voices || data.voices.length === 0) {
+        sel.innerHTML = '<option value="">No voices found — clone one first</option>';
+        return;
+      }
+      data.voices.forEach(v => {
+        const o = document.createElement('option');
+        o.value = v.voice_id;
+        o.textContent = v.name + ' (' + v.voice_id.slice(0, 8) + '…)';
+        sel.appendChild(o);
+      });
+    } catch (e) {
+      sel.innerHTML = '<option value="">Error loading voices</option>';
+    }
+  }
+
+  // ── Clone ──────────────────────────────────────────────────
+  document.getElementById('btn-clone').addEventListener('click', async function() {
+    const name = document.getElementById('clone-name').value.trim();
+    const desc = document.getElementById('clone-desc').value.trim();
+    const st   = document.getElementById('clone-status');
+    if (!name) return setStatus(st, 'Voice name is required.', false);
+
+    this.disabled = true;
+    this.textContent = 'Uploading…';
+    try {
+      const res = await post('/api/clone', { name, description: desc });
+      if (res.error) setStatus(st, '✗ ' + res.error, false);
+      else {
+        setStatus(st, '✓ ' + res.message + '\n voice_id: ' + res.voice_id, true);
+        loadVoices();
+      }
+    } catch (e) {
+      setStatus(st, '✗ Network error: ' + e.message, false);
+    } finally {
+      this.disabled = false;
+      this.textContent = 'Upload Samples & Clone';
+    }
+  });
+
+  // ── TTS ────────────────────────────────────────────────────
+  document.getElementById('btn-tts').addEventListener('click', async function() {
+    const text       = document.getElementById('tts-text').value.trim();
+    const voice_id   = document.getElementById('tts-voice').value;
+    const stability  = parseFloat(document.getElementById('stability').value);
+    const similarity = parseFloat(document.getElementById('similarity').value);
+    const st         = document.getElementById('tts-status');
+    if (!text) return setStatus(st, 'Text is required.', false);
+
+    this.disabled = true;
+    this.textContent = 'Generating…';
+    try {
+      const res = await post('/api/tts', { text, voice_id, stability, similarity_boost: similarity });
+      if (res.error) setStatus(st, '✗ ' + res.error, false);
+      else {
+        setStatus(st, '✓ ' + res.message + '\n→ ' + res.file, true);
+        loadExports();
+      }
+    } catch (e) {
+      setStatus(st, '✗ Network error: ' + e.message, false);
+    } finally {
+      this.disabled = false;
+      this.textContent = 'Generate 44.1 kHz WAV';
+    }
+  });
+
+  // ── Exports ────────────────────────────────────────────────
+  async function loadExports() {
+    const ul = document.getElementById('exports-list');
+    try {
+      const data = await fetch('/api/exports').then(r => r.json());
+      if (!data.files || data.files.length === 0) {
+        ul.innerHTML = '<li class="empty">No exports yet.</li>';
+        return;
+      }
+      ul.innerHTML = data.files.map(f =>
+        `<li><span>${f}</span><a href="/exports/${encodeURIComponent(f)}" download>↓ Download</a></li>`
+      ).join('');
+    } catch (e) {
+      ul.innerHTML = '<li class="empty">Error loading exports.</li>';
+    }
+  }
+
+  document.getElementById('btn-refresh').addEventListener('click', loadExports);
+
+  // ── Init ───────────────────────────────────────────────────
+  loadVoices();
+  loadExports();
+</script>
+</body>
+</html>
